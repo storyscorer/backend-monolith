@@ -1,4 +1,6 @@
-![Story Scorer Logo](/assets/storyscorer-logos.jpeg)
+<div align="center">
+  <img src="/assets/storyscorer-logos.jpeg" alt="StoryScorer logo" />
+</div>
 
 # StoryScorer Backend Monolith
 
