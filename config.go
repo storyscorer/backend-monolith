@@ -8,21 +8,22 @@ import (
 )
 
 type Config struct {
-	LogLevel string `toml:"log_level"`
+	LogLevel string
 
-	Server   ServerConfig   `toml:"server"`
-	Database DatabaseConfig `toml:"database"`
+	Server   ServerConfig
+	Database DatabaseConfig
 }
 
 type ServerConfig struct {
-	Port int `toml:"port"`
+	Port int
 }
 
 type DatabaseConfig struct {
-	Host     string `toml:"host"`
-	Port     int    `toml:"port"`
-	Username string `toml:"username"`
-	Password string `toml:"password"`
+	Host     string
+	Port     int
+	Username string
+	Password string
+	DBName   string `toml:"dbname"`
 }
 
 func loadConfig(env string) (*Config, error) {

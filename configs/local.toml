@@ -5,6 +5,7 @@ port = 8080
 
 [database]
 host = "127.0.0.1"
-port = 4407
-username = "admin"
-password = "test"
+port = 4406
+username = "root"
+password = "password"
+dbname = "storyscorer"

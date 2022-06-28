@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/uptrace/bun"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -14,6 +15,7 @@ import (
 type Handler struct {
 	Config *Config
 	Router *mux.Router
+	DB     *bun.DB
 }
 
 func (h *Handler) Handle(port int) {
@@ -62,10 +64,16 @@ func main() {
 	unbindLgr := zap.ReplaceGlobals(lgr)
 	defer unbindLgr()
 
+	db, err := createDbConnection(cfg.Database.Host, cfg.Database.Port, cfg.Database.Username, cfg.Database.Password, cfg.Database.DBName)
+	if err != nil {
+		log.Fatalf("Failed to initialise the DB connection, terminating: %s\n", err.Error())
+	}
+
 	rtr := mux.NewRouter()
 	h := Handler{
 		Config: cfg,
 		Router: rtr,
+		DB:     db,
 	}
 
 	h.Handle(cfg.Server.Port)
