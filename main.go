@@ -2,40 +2,14 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
 )
 
-type Config struct {
-	Server ServerConfig `toml:"server"`
-}
-
-type ServerConfig struct {
-	Port int `toml:"port"`
-}
-
-func loadConfig(env string) *Config {
-	viper.SetConfigFile(fmt.Sprintf("configs/%s.toml", env))
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalf("Failed to load config file, %s", err.Error())
-	}
-
-	vip := viper.GetViper()
-	var cfg Config
-	err = vip.Unmarshal(&cfg)
-	if err != nil {
-		log.Fatalf("Failed to unmarshal the config file, %s", err.Error())
-	}
-
-	return &cfg
-}
-
 type Handler struct {
+	Config *Config
 	Router *mux.Router
 }
 
@@ -59,6 +33,7 @@ func main() {
 
 	rtr := mux.NewRouter()
 	h := Handler{
+		Config: cfg,
 		Router: rtr,
 	}
 
