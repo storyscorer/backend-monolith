@@ -9,7 +9,10 @@
 ## Scripts
 
 ### `make build`
-Build the binary to be used - it is essentially just a `go build .` so this will create a new binary to be used (and it will also build the binary for the system this command is being executed on).
+Update the dependencies file, also build the binary to be used - it is essentially just a `go build .` so this will create a new binary to be used (and it will also build the binary for the system this command is being executed on).
 
 ### `make start`
 Build the binary, and run it instantaneously.
+
+### `make tidy`
+Run a `go mod tidy` within the confines of the Makefile.
