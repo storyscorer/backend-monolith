@@ -8,6 +8,8 @@ import (
 )
 
 type Config struct {
+	LogLevel string `toml:"log_level"`
+
 	Server   ServerConfig   `toml:"server"`
 	Database DatabaseConfig `toml:"database"`
 }
@@ -23,7 +25,7 @@ type DatabaseConfig struct {
 	Password string `toml:"password"`
 }
 
-func loadConfig(env string) *Config {
+func loadConfig(env string) (*Config, error) {
 	viper.SetConfigFile(fmt.Sprintf("configs/%s.toml", env))
 	err := viper.ReadInConfig()
 	if err != nil {
@@ -33,9 +35,5 @@ func loadConfig(env string) *Config {
 	vip := viper.GetViper()
 	var cfg Config
 	err = vip.Unmarshal(&cfg)
-	if err != nil {
-		log.Fatalf("Failed to unmarshal the config file, %s", err.Error())
-	}
-
-	return &cfg
+	return &cfg, err
 }
